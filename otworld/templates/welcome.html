@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        {% load static %}
+    <link rel="stylesheet" href="{% static '/otworld/style.css' %}">
+    </head>
+    <title>UpsideDown</title>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="/static/js/loc.js"></script>
+<style>
+main {
+    position:relative;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+</style>
+<div align="center">
+<main align="center">
+    <div id="aft_scn"></div>
+<div id="reader"></div>
+</main>
+<div>
+<script>
+const scanner = new Html5QrcodeScanner('reader', {
+qrbox: {
+width: 200,
+height: 200,
+},
+fps: 20,
+});
+scanner.render(success, error);
+let loc = " ";
+let res = " ";
+function success(result) {
+    document.getElementById('result').value = result;
+    scanner.clear();
+    res = document.getElementById('result').value;
+    document.getElementById('reader').remove();
+    aft_qr();
+};
+function error(err) {
+console.error(err);
+}
+</script>
+
+
+
+<form method="post">
+    {% csrf_token %}
+    {% comment %} <label for="pcode">
+        Place Code(dev).:
+    </label>
+      <input type="text" placeholder="Loc Code" name="pno" required><br><br>
+     {% endcomment %}
+     <input type="hidden" id="result" name="loc_id">
+      <label for="CC Code">
+        Cont Code:
+    </label>
+    <input type="text" placeholder="CC code." name="cc" required><br><br>
+    
+    <label id="prev_loc_lb" for="last">
+        Last Location.:
+    </label>
+      <input type="text" placeholder="Last Loctaion" id="prev_loc" name="prev_loc" required><br><br>
+    <div class="center">
+        <button type="submit">SEND</button>
+    </div>
+</form>
+</body>
+</head>
