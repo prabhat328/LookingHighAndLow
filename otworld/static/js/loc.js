@@ -1,3 +1,5 @@
+// This code shows the current location to the user.
+
 function aft_qr() {
     if (res.slice(3) == 'yz1') {
         loc = "304";
